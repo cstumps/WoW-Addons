@@ -1,0 +1,171 @@
+<Ui>
+
+  <Frame name="jPadFrame" parent="UIParent" toplevel="true" clampedToScreen="true" enableMouse="true" movable="true" resizable="true">
+    <Size>
+      <AbsDimension x="300" y="200" />
+    </Size>
+    <Anchors>
+      <Anchor point="CENTER" />
+    </Anchors>
+    <!--<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">-->
+    <Backdrop bgFile="Interface\FrameGeneral\UI-Background-Marble" edgeFile="Interface\Tooltips\UI-Tooltip-Border" horizTile="true" vertTile="true">
+      <BackgroundInsets>
+        <AbsInset left="4" right="4" top="4" bottom="4"/>
+      </BackgroundInsets>
+      <TileSize> <AbsValue val="16" /> </TileSize>
+      <EdgeSize> <AbsValue val="16" /> </EdgeSize>
+    </Backdrop>
+
+    <Frames>
+      <!-- Begin ScrollFrame -->
+      <ScrollFrame name="jPadScrollFrame" inherits="UIPanelScrollFrameTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT"> 
+            <Offset x="8" y="-8" /> 
+          </Anchor>
+          <Anchor point="BOTTOMRIGHT"> 
+            <Offset x="-30" y="22" /> 
+          </Anchor>
+        </Anchors>
+
+        <ScrollChild>
+          <!-- EditBox in ScrollFrame -->
+          <EditBox name="jPadEditBox" multiLine="true" letters="4096" autoFocus="false" ignoreParentAlpha="true">
+            <Size x="64" y="64" />
+            <Anchors>
+              <Anchor point="TOPLEFT" />
+              <Anchor point="BOTTOMRIGHT" />
+            </Anchors>
+            <Scripts>
+              <!-- 
+                Lose focus if escape pressed.  If we don't do this you have to actively click somplace else to give focus back to the main environment.  The only place to 
+                do this by default is the small chat input 
+              -->
+              <OnEscapePressed>
+                self:ClearFocus()
+              </OnEscapePressed>
+
+              <!-- Auto scrolling -->
+              <OnCursorChanged>
+                ScrollingEdit_OnCursorChanged( self, x, y, w, h )
+              </OnCursorChanged>
+              <OnUpdate>
+                ScrollingEdit_OnUpdate( self, elapsed, self:GetParent() )
+              </OnUpdate>
+
+            </Scripts>
+            <FontString inherits="GameFontHighlight"/>
+          </EditBox>
+        </ScrollChild>
+
+      </ScrollFrame>
+      <!-- End ScrollFrame -->
+
+      <!-- Begin window resize widget -->
+      <Button parentKey="ResizeGrab">
+        <Size x="16" y="16" />
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-4" y="4" />
+        </Anchors>
+        <NormalTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up"/>
+        <PushedTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
+        <HighlightTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight" alphaMode="ADD"/>
+        <Scripts>
+          <OnMouseDown>
+            if not jPadSettings.Lock then
+              jPadFrame:StartSizing()
+            end
+          </OnMouseDown>
+          <OnMouseUp>
+            jPadFrame:StopMovingOrSizing()
+          </OnMouseUp>
+        </Scripts>
+      </Button>
+      <!-- End window resize widget -->
+
+      <!-- 
+        Begin FocusGrabber 
+        Hidden button that overlaps the entire frame.  When clicked gives focus to edit box 
+      -->
+      <Button parentKey="FocusGrabber">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="jPadScrollFrame" />
+          <Anchor point="BOTTOMRIGHT" relativeTo="jPadScrollFrame" />
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            jPadEditBox:SetCursorPosition( jPadEditBox:GetText():len() )
+            jPadEditBox:SetFocus( true )
+          </OnClick>
+        </Scripts>
+      </Button>
+      <!-- End FocusGrabber -->
+
+      <!-- Minimap button -->
+      <Button name="jPadMiniButton" parent="Minimap" enableMouse="true" hidden="false">
+        <Size>
+          <AbsDimension x="33" y="33" />
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <Texture name="jPadMiniButton_Icon" file="Interface\Icons\Ability_spy">
+              <Size>
+                <AbsDimension x="21" y="21" />
+              </Size>
+              <Anchors>
+                <Anchor point="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="7" y="-6" />
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </Texture>
+          </Layer>
+          <Layer level="OVERLAY">
+            <Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+              <Size>
+                <AbsDimension x="56" y="56" />
+              </Size>
+              <Anchors>
+                <Anchor point="TOPLEFT" />
+              </Anchors>
+            </Texture>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnClick>
+            jPadFrame:ToggleShow()
+          </OnClick>
+        </Scripts>
+      </Button>
+
+    </Frames>
+
+    <Scripts>
+      <OnLoad>
+        self:RegisterEvent( "PLAYER_LOGIN" )
+      </OnLoad>
+      <OnEvent>
+        if self[ event ] then
+          self[ event ]( self, ... )
+        end
+      </OnEvent>
+      <OnSizeChanged>
+        self:OnSizeChanged( w )
+      </OnSizeChanged>
+      <OnMouseDown>
+        if not jPadSettings.Lock then
+          self:StartMoving()
+        end
+      </OnMouseDown>
+      <OnMouseUp>
+        self:StopMovingOrSizing()
+      </OnMouseUp>
+    </Scripts>
+
+  </Frame>
+
+ </Ui>

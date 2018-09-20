@@ -1,0 +1,8 @@
+<Bindings>
+	<Binding name="JPAD_SAVE" header="JPAD" category="ADDONS">
+		jPadFrame:SaveText()
+	</Binding>
+	<Binding name="JPAD_UNDO" category="ADDONS">
+		jPadFrame:UndoEdit()
+	</Binding>
+</Bindings>

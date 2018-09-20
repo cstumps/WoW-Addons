@@ -1,0 +1,9 @@
+## Interface: 80000
+## Title: jPad
+## Notes: A simple notepad addon
+## Author: Jason
+## Version: 1.0.0
+## SavedVariablesPerCharacter: jPadSettings, jPadText
+
+jPad.xml
+jPad.lua
