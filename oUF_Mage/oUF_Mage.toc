@@ -1,0 +1,5 @@
+## Interface: 80000
+## Title: oUF: Mage
+## Dependencies: oUF
+
+oUF_Mage.lua

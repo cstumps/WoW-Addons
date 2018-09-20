@@ -29,3 +29,6 @@ Some simple panels to lay buttons out on.
 
 **jTooltip:**  
 Simple tooltip display at top middle of screen.
+
+**oUF_Mage:**
+Heavily modified name plates / castbar, etc for oUF.
