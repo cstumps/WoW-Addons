@@ -1,4 +1,4 @@
-## Interface: 80000
+## Interface: 110002
 ## Title: jChat
 
 jChat.lua

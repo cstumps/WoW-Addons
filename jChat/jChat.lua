@@ -9,8 +9,8 @@ ChatFrameMenuButton:Hide()
 ChatFrameMenuButton.Show = kill
 
 -- Hide the social button
-ChatMenu:Hide()
-ChatMenu.Show = kill
+--ChatMenu:Hide()
+--ChatMenu.Show = kill
 
 -- Hide up/down buttons on every chat window
 for i = 1, 10 do
@@ -28,9 +28,8 @@ end
 for i = 1, 10 do
 	local x=({_G["ChatFrame"..i.."EditBox"]:GetRegions()})
 
-	--for j = 6, 11 do
 	for j = 3, 10 do
-		x[j]:SetAlpha(0)
+		x[j]:Hide()
 	end
 end
 
@@ -47,8 +46,8 @@ CHAT_FRAME_FADE_OUT_TIME = 0.5;
 -- Position the box
 ChatFrame1EditBox:ClearAllPoints()
 ChatFrame1EditBox:SetAltArrowKeyMode(false)
-ChatFrame1EditBox:SetPoint("TOPLEFT",  ChatFrame1, "BOTTOMLEFT", -5, 0)
-ChatFrame1EditBox:SetPoint("TOPRIGHT", ChatFrame1, "BOTTOMRIGHT", 5, 0)
+ChatFrame1EditBox:SetPoint("TOPLEFT",  ChatFrame1, "BOTTOMLEFT", -10, 0)
+ChatFrame1EditBox:SetPoint("TOPRIGHT", ChatFrame1, "BOTTOMRIGHT", -10, 0)
 
 -- Make a semi transparent backdrop
 local bg = ChatFrame1EditBox:CreateTexture(nil, "BACKGROUND")
@@ -61,11 +60,11 @@ local evtFrame2 = CreateFrame('Frame')
 evtFrame2:RegisterEvent('PLAYER_ENTERING_WORLD')
 evtFrame2:SetScript('OnEvent', function(self)
 	for i = 1, 10 do
-        _G["ChatFrame"..i]:SetFont("Fonts\\FRIZQT__.TTF", 12, nil)
+        _G["ChatFrame"..i]:SetFont("Fonts\\FRIZQT__.TTF", 12, "")
 	end
 end)
 
-ChatFrame1EditBox:SetFont("Fonts\\FRIZQT__.TTF", 14, nil)
+ChatFrame1EditBox:SetFont("Fonts\\FRIZQT__.TTF", 14, "")
 
 -- Sticky channels
 ChatTypeInfo["YELL"].sticky = 1
