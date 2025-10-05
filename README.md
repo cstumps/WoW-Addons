@@ -1,4 +1,4 @@
-# WoW-Addons
+# WoW-Addons Test
 
 A few home build addons for World of Warcraft:
 
